@@ -8,6 +8,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+<<<<<<< HEAD
+=======
+import javax.validation.Valid;
+>>>>>>> Nova-Implementacao
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -21,12 +25,17 @@ public class ItemController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+<<<<<<< HEAD
     public ItemEntity saveItem(@RequestBody ItemEntity itemEntity){
+=======
+    public ItemEntity saveItem(@RequestBody @Valid ItemEntity itemEntity){
+>>>>>>> Nova-Implementacao
         return itemService.saveItem(itemEntity);
     }
 
     @GetMapping("/{id}")
     public ItemEntity getItemById (@PathVariable UUID id) {
+<<<<<<< HEAD
         return itemService.getItemById(id).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Item não foi encontrado!!!"));
     }
@@ -54,6 +63,20 @@ public class ItemController {
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Item não foi encontrado!!!");
         }
+=======
+        return itemService.getItemById(id);
+    }
+
+    @PutMapping("/{id}")
+    public ItemEntity updateItem(@PathVariable UUID id, @RequestBody @Valid ItemEntity newItem){
+        return itemService.updateItem(id, newItem);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteItem(@PathVariable UUID id){
+        itemService.deleteItem(id);
+>>>>>>> Nova-Implementacao
     }
 
     @GetMapping

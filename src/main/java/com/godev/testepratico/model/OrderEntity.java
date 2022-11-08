@@ -6,6 +6,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+<<<<<<< HEAD
+=======
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+>>>>>>> Nova-Implementacao
 import java.util.*;
 
 @Entity
@@ -18,9 +23,18 @@ public class OrderEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
+<<<<<<< HEAD
     private Integer number;
     @JsonFormat(pattern = "dd/MM/yyyy")
     private Date date;
+=======
+    @NotNull(message = "Campo numero deve ser preenchido!")
+    private Integer number;
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    @NotEmpty(message = "Campo data deve ser preenchido!")
+    private Date date;
+    @NotNull(message = "Campo precentual de desconto deve ser preenchido!")
+>>>>>>> Nova-Implementacao
     private Double percentualDiscount;
     private Double totalValue;
 

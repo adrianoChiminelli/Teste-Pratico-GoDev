@@ -8,6 +8,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+<<<<<<< HEAD
+=======
+import javax.validation.Valid;
+>>>>>>> Nova-Implementacao
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -21,6 +25,7 @@ public class OrderController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+<<<<<<< HEAD
     public OrderEntity saveOrder(@RequestBody OrderEntity order){
         if(order.getTotalValue() == null){
             order.setTotalValue(0.);
@@ -28,11 +33,15 @@ public class OrderController {
         if(order.getPercentualDiscount() == null){
             order.setPercentualDiscount(0.);
         }
+=======
+    public OrderEntity saveOrder(@RequestBody @Valid OrderEntity order){
+>>>>>>> Nova-Implementacao
         return orderService.saveOrder(order);
     }
 
     @GetMapping("/{id}")
     public OrderEntity getOrderById (@PathVariable UUID id) throws Exception {
+<<<<<<< HEAD
         return orderService.getOrderById(id).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Pedido não foi encontrado!!!"));
     }
@@ -61,6 +70,20 @@ public class OrderController {
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pedido não foi encontrado!!!");
         }
+=======
+        return orderService.getOrderById(id);
+    }
+
+    @PutMapping("/{id}")
+    public OrderEntity updateOrder(@PathVariable UUID id, @RequestBody @Valid OrderEntity newOrder){
+        return orderService.updateOrder(id, newOrder);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public void deleteOrder(@PathVariable UUID id){
+        orderService.deleteOrderById(id);
+>>>>>>> Nova-Implementacao
     }
 
     @GetMapping
