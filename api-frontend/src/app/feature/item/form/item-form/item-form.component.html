@@ -1,0 +1,35 @@
+<p-dialog header="Item" [(visible)]="showInputDialog" [responsive]="true" showEffect="fade" [modal]="true" [style]="{width: '400px'}" (onHide)="closeDialog()" [formGroup]="formGroup">
+  <div>
+    <div style="text-align:center">
+        <img>
+    </div>
+    <div class="ui-g">
+      <div>
+        <span class="font-semibold">Descrição</span>
+      </div>
+      <div class="ui-g-3 form">
+        <input type="text" pInputText formControlName="description"/>
+      </div>
+      <div>
+        <span class="font-semibold">Tipo</span>
+      </div>
+      <div class="ui-g-3 form">
+        <p-dropdown formControlName="type" placeholder="Selecione um tipo" [options]="itemType" optionValue="value" optionLabel="name"></p-dropdown>
+      </div>
+      <div>
+        <span class="font-semibold">Valor</span>
+      </div>
+      <div class="ui-g-3 form">
+        <p-inputNumber inputId="currency-br" mode="currency" currency="BRL" locale="pt-BR" formControlName="value"></p-inputNumber>
+      </div>
+    </div>
+    <div class="ui-g-3 form">
+      <div>
+        <p-button label="Salvar" icon="pi pi-check" (click)="onSave()"></p-button>
+        <p-button label="Cancelar" icon="pi pi-times" styleClass="p-button-secondary" (click)="onCancel()"></p-button>
+        <p-confirmPopup></p-confirmPopup>
+        <p-button *ngIf="!isNew()" icon="pi pi-trash" styleClass="p-button-danger" (click)="confirmDelete($event)"></p-button>
+      </div>
+    </div>
+  </div>
+</p-dialog>
