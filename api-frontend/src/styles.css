@@ -1,0 +1,32 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~primeng/resources/themes/soho-light/theme.css';
+@import '~primeicons/primeicons.css';
+@import '~primeng/resources/primeng.min.css';
+@import '~primeflex/primeflex.css';
+
+.page {
+  margin: 50px;
+}
+
+.form {
+  margin-bottom: 5%;
+  display: flex;
+}
+
+.form input {
+  width: 350px;
+}
+
+.form button {
+  margin-right: 10px;
+  margin-top: 20px;
+}
+
+#edit-button {
+  background-color: white;
+  border-color: rgb(230, 230, 230);
+}
+
+.pi-bars{
+  color: black;
+}
