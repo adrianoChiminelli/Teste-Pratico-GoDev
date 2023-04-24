@@ -33,13 +33,17 @@ export class ItemFormComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.selectedItem) {
-      this.formGroup.patchValue({
+      this.loadData();
+    }
+  }
+
+  loadData() {
+    this.formGroup.patchValue({
         id: this.selectedItem.id,
         description: this.selectedItem.description,
         type: this.selectedItem.type,
         value: this.selectedItem.value
-      }, { emitEvent: false, onlySelf: true })
-    }
+      }, { emitEvent: false, onlySelf: true });
   }
 
   getForm() {

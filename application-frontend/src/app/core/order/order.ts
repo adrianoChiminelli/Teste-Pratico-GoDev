@@ -1,5 +1,5 @@
 export interface Order {
-  id: number;
+  id?: number;
   number: number;
   date: Date;
   percentualDiscount: number;

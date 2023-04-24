@@ -27,6 +27,20 @@
   border-color: rgb(230, 230, 230);
 }
 
+.pi-times {
+  color: black;
+}
+
 .pi-bars{
   color: black;
+}
+
+.cart-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.p-sidebar div {
+  font-family: Verdana;
 }

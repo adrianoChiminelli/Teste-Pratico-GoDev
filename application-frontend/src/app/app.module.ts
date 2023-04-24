@@ -1,7 +1,12 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http'
 import { DataViewModule } from 'primeng/dataview';
+
+import ptBr from '@angular/common/locales/pt';
+import { registerLocaleData } from '@angular/common';
+
+registerLocaleData(ptBr);
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,12 +25,19 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { OrderComponent } from './feature/order/order.component';
+import { SidebarModule } from 'primeng/sidebar';
+import { OrderItemComponent } from './feature/order-item/order-item.component';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { TooltipModule } from 'primeng/tooltip';
 
 @NgModule({
   declarations: [
     AppComponent,
     ItemComponent,
     ItemFormComponent,
+    OrderComponent,
+    OrderItemComponent,
   ],
   imports: [
     BrowserModule,
@@ -45,9 +57,12 @@ import { ConfirmPopupModule } from 'primeng/confirmpopup';
     InputNumberModule,
     FileUploadModule,
     ToastModule,
-    ConfirmPopupModule
+    ConfirmPopupModule,
+    SidebarModule,
+    OverlayPanelModule,
+    TooltipModule
   ],
-  providers: [],
+  providers: [{ provide: LOCALE_ID, useValue: 'pt' }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

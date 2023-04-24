@@ -3,9 +3,19 @@
     <p-tabMenu [model]="items" [activeItem]="activeItem" (activeItemChange)="onActiveItemChange($event)"></p-tabMenu>
   </div>
   <div class="card">
+    <div *ngIf="sidebarVisible">
+      <app-order-item
+        (onVisibilityChange)="sidebarVisibilityChange($event)"
+        (onRemoveFromCart)="onRemoveFromCart($event)"
+        [itemsOnCart]="orderItemsOnCart">
+      </app-order-item>
+    </div>
     <p-card>
         <div class="card" *ngIf="activeItem.label === 'Itens'">
-          <app-item></app-item>
+          <app-item (itemAdded)="onItemAdded($event)"></app-item>
+        </div>
+        <div class="card" *ngIf="activeItem.label === 'Pedidos'">
+          <app-order></app-order>
         </div>
     </p-card>
   </div>

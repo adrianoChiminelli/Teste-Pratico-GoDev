@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Message, MessageService } from 'primeng/api';
+import { OverlayPanel } from 'primeng/overlaypanel';
 import { Item } from 'src/app/core/item/item';
 import { ItemService } from 'src/app/core/item/item.service';
 
@@ -13,6 +14,10 @@ export class ItemComponent implements OnInit {
   public items: Item[] = [];
   public selectedItem: any;
   public showInputDialog: boolean = false;
+  public itemsOnCart: Item[] = [];
+  public showCartMenu: boolean = false;
+
+  @Output() itemAdded = new EventEmitter<any>();
 
   constructor(private itemService: ItemService, private messageService: MessageService) { }
 
@@ -22,6 +27,7 @@ export class ItemComponent implements OnInit {
 
   public updateGrid() {
     this.items = [];
+    this.itemsOnCart = [];
     this.getItems();
   }
 
@@ -29,7 +35,11 @@ export class ItemComponent implements OnInit {
     this.itemService.get()
       .subscribe({
         next: (items) => this.items = items,
-        error: (err) => alert(err.message)
+        error: (err) => console.log(err) /* this.showToast({
+          severity: 'error',
+          detail: this.getErroMessage(err.error.errors),
+          summary: 'Erro ao carregar informações'
+        }) */
       })
   }
 
@@ -55,5 +65,23 @@ export class ItemComponent implements OnInit {
 
   public showToast(event: Message) {
     this.messageService.add(event);
+  }
+
+  public addToCart(quantity: number, item: Item, op: OverlayPanel) {
+    if (!quantity) {
+      return;
+    }
+
+    this.itemAdded.emit({ itemToAdd: item, quantityToAdd: quantity });
+    op.hide();
+  }
+
+  private getErroMessage(errors: any[]) {
+    let message: string = '';
+    errors.forEach(err => {
+      message += err.defaultMessage + '\n';
+    })
+
+    return message;
   }
 }

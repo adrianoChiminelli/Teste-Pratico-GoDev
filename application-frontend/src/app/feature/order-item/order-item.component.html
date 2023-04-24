@@ -1,0 +1,69 @@
+<p-toast></p-toast>
+<div class="card flex justify-content-center">
+  <p-sidebar [(visible)]="sidebarVisible" (onHide)="onPanelHide()" styleClass="w-30rem" position="right">
+    <ng-template pTemplate="header">
+      <div class="text-2m font-bold">
+        <span>CARRINHO DE COMPRAS</span>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="content">
+      <p-dataView #dv [value]="itemsOnCart">
+        <ng-template let-orderItem pTemplate="listItem">
+            <div class="col-12">
+                <div class="flex flex-column xl:flex-row xl:align-items-center p-4 gap-4">
+                  <img class="w-5 sm:w-8rem xl:w-3rem shadow-2 block xl:block mx-auto border-round"
+                    *ngIf="orderItem.item.type === 'P'; else service_image"
+                    [src]="'assets/images/item-image.png'"
+                    onerror="this.src='assets/images/not-found.png'">
+                  <div class="flex flex-column justify-content-between align-items-center xl:align-items-start flex-1 gap-2">
+                    <div class="text-base font-bold text-700">
+                      {{ orderItem.item.description }}
+                    </div>
+                    <div class="flex align-items-center gap-3">
+                      <span class="text-sm">
+                        Quantidade:
+                      </span>
+                      <span class="text-sm font-semibold">
+                        {{ orderItem.quantity }}
+                      </span>
+                    </div>
+                    <div class="flex align-items-center gap-3">
+                      <span class="text-sm">
+                        Valor:
+                      </span>
+                      <span class="text-sm font-semibold">
+                        {{ orderItem.totalValue | currency : 'BRL' }}
+                      </span>
+                    </div>
+                  </div>
+                    <div class="flex sm:flex-column align-items-center sm:align-items-end gap-3 sm:gap-2">
+                      <button pButton
+                        pTooltip="Remover"
+                        tooltipPosition="left"
+                        id="edit-button"
+                        icon="pi pi-times"
+                        class="md:align-self-end mb-2 p-button-rounded"
+                        (click)="onRemove(orderItem)">
+                      </button>
+                  </div>
+                </div>
+            </div>
+        </ng-template>
+      </p-dataView>
+    </ng-template>
+    <ng-template pTemplate="footer">
+      <button pButton
+      type="button"
+      icon="pi pi-shopping-cart"
+      class="ui-button-rounded h-2rem md:align-self-end mb-2 gap 3"
+      label="Criar pedido"
+      (click)="makeOrder()">
+    </button>
+    </ng-template>
+  </p-sidebar>
+</div>
+
+<ng-template #service_image>
+  <img class="w-5 sm:w-8rem xl:w-3rem shadow-2 block xl:block mx-auto border-round"
+    [src]="'assets/images/service-image.jpg'">
+</ng-template>
