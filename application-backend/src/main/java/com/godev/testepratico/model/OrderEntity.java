@@ -28,7 +28,7 @@ public class OrderEntity {
     @NotNull(message = "Campo numero deve ser preenchido!")
     private Integer number;
     @JsonFormat(pattern = "dd/MM/yyyy")
-    @NotEmpty(message = "Campo data deve ser preenchido!")
+    @NotNull(message = "Campo data deve ser preenchido!")
     private Date date;
     @NotNull(message = "Campo precentual de desconto deve ser preenchido!")
     private Double percentualDiscount;

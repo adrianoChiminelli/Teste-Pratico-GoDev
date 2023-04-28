@@ -4,6 +4,7 @@ import com.godev.testepratico.controller.dto.OrderItemResultDTO;
 import com.godev.testepratico.controller.dto.OrderWithNewPercentualDTO;
 import com.godev.testepratico.controller.dto.OrderClosedDTO;
 import com.godev.testepratico.controller.dto.OrderItemDTO;
+import com.godev.testepratico.model.OrderItemEntity;
 import com.godev.testepratico.services.OrderItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -40,7 +41,7 @@ public class OrderItemsController {
     }
 
     @GetMapping("/{orderId}/items")
-    public List<OrderItemResultDTO> getOrderItems(@PathVariable UUID orderId){
+    public List<OrderItemEntity> getOrderItems(@PathVariable UUID orderId){
         return orderItemService.getOrdersItem(orderId);
     }
 
@@ -64,5 +65,11 @@ public class OrderItemsController {
     @GetMapping("/{orderId}/close")
     public OrderClosedDTO closeOrder(@PathVariable UUID orderId){
         return orderItemService.closeOrder(orderId);
+    }
+
+    @PostMapping("/{orderId}/items/saveAll")
+    @ResponseStatus(HttpStatus.CREATED)
+    public List<OrderItemEntity> saveOrderItemInBatch(@RequestBody @Valid List<OrderItemEntity> orderItemList){
+        return orderItemService.saveOrderItemBatch(orderItemList);
     }
 }
