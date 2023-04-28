@@ -15,22 +15,26 @@ export class OrderItemService {
   constructor(private http: HttpClient) { }
 
   public getOrderItem(orderId: string): Observable<OrderItem[]> {
-    return this.http.get<OrderItem[]>(`${this.apiUrl}/${orderId}/${this.resource}`);
+    return this.http.get<OrderItem[]>(`${this.apiUrl}/orders/${orderId}/${this.resource}`);
   }
 
   public getOrderItemById(orderId: string, orderItemId: string): Observable<OrderItem> {
-    return this.http.get<OrderItem>(`${this.apiUrl}/${orderId}/${this.resource}/${orderItemId}`);
+    return this.http.get<OrderItem>(`${this.apiUrl}/orders/${orderId}/${this.resource}/${orderItemId}`);
   }
 
   public addOrderItem(orderId: string, orderItem: OrderItem): Observable<OrderItem> {
-    return this.http.post<OrderItem>(`${this.apiUrl}/${orderId}/${this.resource}`, orderItem);
+    return this.http.post<OrderItem>(`${this.apiUrl}/orders/${orderId}/${this.resource}`, orderItem);
   }
 
   public update(orderId: string, orderItemId: number, orderItem: OrderItem): Observable<OrderItem> {
-    return this.http.put<OrderItem>(`${this.apiUrl}/${orderId}/${this.resource}/${orderItemId}`, orderItem);
+    return this.http.put<OrderItem>(`${this.apiUrl}/orders/${orderId}/${this.resource}/${orderItemId}`, orderItem);
   }
 
   public delete(orderId: number, orderItemId: string) {
-    this.http.delete<OrderItem>(`${this.apiUrl}/${orderId}/${this.resource}/${orderItemId}`);
+    this.http.delete<OrderItem>(`${this.apiUrl}/orders/${orderId}/${this.resource}/${orderItemId}`);
+  }
+
+  public addOrderItemList(orderId: string, orderItemList: OrderItem[]) {
+    return this.http.post<OrderItem[]>(`${this.apiUrl}/orders/${orderId}/${this.resource}/saveAll`, orderItemList);
   }
 }

@@ -82,15 +82,14 @@ public class OrderItemService {
         orderRepository.findById(orderId).ifPresentOrElse(order -> {
                     orderItemRepository.deleteById(orderItemId);
 
-                    List<OrderItemResultDTO> itemsList = this.getOrdersItem(orderId);
+                    List<OrderItemResultDTO> itemsList = orderItemListToDTO(this.getOrdersItem(orderId));
                     order.setTotalValue(calculateTotalValue(itemsList, order.getPercentualDiscount()));
                     orderRepository.save(order);
                 }, () -> new OrderItemNotFoundException("Item de pedido não encontrado!!"));
     }
 
-    public List<OrderItemResultDTO> getOrdersItem(UUID orderId){
-        List<OrderItemEntity> itemsList = orderItemRepository.findByOrderId(orderId);
-        return orderItemListToDTO(itemsList);
+    public List<OrderItemEntity> getOrdersItem(UUID orderId){
+        return orderItemRepository.findByOrderId(orderId);
     }
 
     @Transactional
@@ -110,7 +109,7 @@ public class OrderItemService {
 
                     OrderItemEntity orderItemSaved = orderItemRepository.save(orderItem);
 
-                    List<OrderItemResultDTO> orderItemListDTOS = this.getOrdersItem(orderId);
+                    List<OrderItemResultDTO> orderItemListDTOS = orderItemListToDTO(this.getOrdersItem(orderId));
 
                     order.setTotalValue(calculateTotalValue(orderItemListDTOS, order.getPercentualDiscount()));
                     orderRepository.save(order);
@@ -128,7 +127,7 @@ public class OrderItemService {
     public OrderClosedDTO closeOrderWithNewPercentual(UUID orderId, OrderWithNewPercentualDTO newOrderPercentual){
         return orderRepository.findById(orderId)
                 .map(order -> {
-                    List<OrderItemResultDTO> orderItemList = this.getOrdersItem(orderId);
+                    List<OrderItemResultDTO> orderItemList = orderItemListToDTO(this.getOrdersItem(orderId));
                     if (orderItemList.isEmpty()){
                         throw new NoOrderItemFoundException("O Pedido não pode ser fechado sem nenhum item de pedido vinculado a ele!");
                     }
@@ -147,13 +146,21 @@ public class OrderItemService {
     public OrderClosedDTO closeOrder(UUID orderId){
         return orderRepository.findById(orderId)
                 .map(order -> {
-                    List<OrderItemResultDTO> orderItemsList = this.getOrdersItem(orderId);
+                    List<OrderItemResultDTO> orderItemsList = orderItemListToDTO(this.getOrdersItem(orderId));
                     if (orderItemsList.isEmpty()){
                         throw new NoOrderItemFoundException("O Pedido não pode ser fechado sem nenhum item de pedido vinculado a ele!");
                     }
                     return new OrderClosedDTO(order, orderItemsList);
                 })
                 .orElseThrow(()-> new OrderItemNotFoundException("Item de pedido não encontrado!!"));
+    }
+
+    public List<OrderItemEntity> saveOrderItemBatch(List<OrderItemEntity> toSave) {
+        return orderItemRepository.saveAll(toSave);
+    }
+
+    public List<OrderItemEntity> findByOrderId(UUID orderId) {
+        return orderItemRepository.findByOrderId(orderId);
     }
 
     private List<OrderItemResultDTO> orderItemListToDTO(List<OrderItemEntity> orderItemList) {

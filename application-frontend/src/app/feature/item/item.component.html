@@ -1,30 +1,71 @@
 <p-toast></p-toast>
+<div *ngIf="showCartMenu">
+  <app-order-item></app-order-item>
+</div>
 <p-dataView #dv [value]="items" [rows]="5" [paginator]="true">
   <ng-template let-item pTemplate="listItem">
       <div class="col-12">
           <div class="flex flex-column xl:flex-row xl:align-items-start p-4 gap-4">
-            <button pButton id="edit-button" icon="pi pi-bars" class="md:align-self-center mb-2 p-button-raised" (click)="onEdit(item)"></button>
+            <button pButton id="edit-button"
+              icon="pi pi-bars"
+              class="md:align-self-center mb-2 p-button-raised"
+              (click)="onEdit(item)">
+            </button>
             <img class="w-5 sm:w-12rem xl:w-5rem shadow-2 block xl:block mx-auto border-round"
               *ngIf="item.type === 'P'; else service_image"
               [src]="'assets/images/item-image.png'"
               onerror="this.src='assets/images/not-found.png'">
             <div class="flex flex-column justify-content-between align-items-center xl:align-items-start flex-1 gap-2">
-              <div class="text-2xl font-bold text-700">{{ item.description }}</div>
+              <div class="text-2xl font-bold text-700">
+                {{ item.description }}
+              </div>
               <div class="flex align-items-center gap-3">
                 <span class="font-semibold">{{ item.type === 'P' ? 'Produto' : 'Serviço' }}</span>
               </div>
                 <i [ngClass]="item.type === 'P' ? 'pi pi-tags' : 'pi pi-cog'"></i>
             </div>
               <div class="flex sm:flex-column align-items-center sm:align-items-end gap-3 sm:gap-2">
-                <span class="text-lg font-semibold">{{ 'R$ ' + item.value }}</span>
-                <button pButton icon="pi pi-shopping-cart" class="md:align-self-end mb-2 p-button-rounded"></button>
+                <span class="text-lg font-semibold">
+                  {{ item.value | currency : 'BRL'  }}
+                </span>
+                <p-overlayPanel #op>
+                  <ng-template pTemplate="content">
+                    <div class="flex sm:flex-column align-items-center sm:align-items-start gap-3 sm:gap-2">
+                      <span class="font-semibold">Quantidade:</span>
+                      <p-inputNumber [allowEmpty]="false"
+                        #quantity
+                        mode="decimal"
+                        [showButtons]="true"
+                        inputId="minmax-buttons"
+                        [min]="1"
+                        [max]="100">
+                      </p-inputNumber>
+                      <button pButton
+                        type="button"
+                        icon="pi pi-plus"
+                        class="ui-button-rounded h-2rem md:align-self-end mb-2"
+                        (click)="addToCart(quantity.value, item, op)">
+                      </button>
+                    </div>
+                  </ng-template>
+                </p-overlayPanel>
+                <button pButton icon="pi pi-shopping-cart"
+                  (click)="op.toggle($event)"
+                  class="md:align-self-end mb-2 p-button-rounded">
+                </button>
             </div>
           </div>
       </div>
   </ng-template>
 </p-dataView>
 <div>
-  <button pButton type="button" icon="pi pi-plus" label="Adicionar" class="ui-button-rounded h-2rem" (click)="onAddClick()"></button>
+  <button pButton
+    type="button"
+    icon="pi pi-plus"
+    label="Adicionar"
+    class="ui-button-rounded h-2rem"
+    (click)="onAddClick()">
+  </button>
 </div>
 <ng-template #service_image>
   <img class="w-5 sm:w-12rem xl:w-5rem shadow-2 block xl:block mx-auto border-round"
@@ -32,5 +73,9 @@
 </ng-template>
 
 <div *ngIf="showInputDialog" >
-  <app-item-form [selectedItem]="selectedItem" [showInputDialog]="showInputDialog" (dialogCloseEvent)="dialogClosed($event)" (showToast)="showToast($event)"></app-item-form>
+  <app-item-form [selectedItem]="selectedItem"
+    [showInputDialog]="showInputDialog"
+    (dialogCloseEvent)="dialogClosed($event)"
+    (showToast)="showToast($event)">
+  </app-item-form>
 </div>

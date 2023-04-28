@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-@import '~primeng/resources/themes/soho-light/theme.css';
+@import '~primeng/resources/themes/viva-light/theme.css';
 @import '~primeicons/primeicons.css';
 @import '~primeng/resources/primeng.min.css';
 @import '~primeflex/primeflex.css';
@@ -27,6 +27,27 @@
   border-color: rgb(230, 230, 230);
 }
 
+.pi-times {
+  color: black;
+}
+
 .pi-bars{
   color: black;
+}
+
+.cart-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.p-sidebar div {
+  font-family: Verdana;
+}
+
+.toggle-button {
+  display: block;
+  margin-right: 0;
+  float: right;
+  position: relative;
 }

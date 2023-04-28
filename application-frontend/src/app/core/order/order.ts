@@ -1,7 +1,7 @@
 export interface Order {
-  id: number;
+  id?: string;
   number: number;
-  date: Date;
+  date: any;
   percentualDiscount: number;
   totalValue: number;
 }
