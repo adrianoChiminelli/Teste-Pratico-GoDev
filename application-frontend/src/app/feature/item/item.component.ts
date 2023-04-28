@@ -35,11 +35,11 @@ export class ItemComponent implements OnInit {
     this.itemService.get()
       .subscribe({
         next: (items) => this.items = items,
-        error: (err) => console.log(err) /* this.showToast({
+        error: (err) => this.showToast({
           severity: 'error',
           detail: this.getErroMessage(err.error.errors),
           summary: 'Erro ao carregar informações'
-        }) */
+        })
       })
   }
 

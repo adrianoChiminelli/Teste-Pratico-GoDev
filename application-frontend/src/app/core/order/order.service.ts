@@ -10,6 +10,6 @@ export class OrderService extends EntityService<Order> {
 
   constructor(http: HttpClient) {
     super(http);
-    this.resource = 'order';
+    this.resource = 'orders';
    }
 }

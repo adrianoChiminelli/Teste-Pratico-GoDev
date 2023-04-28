@@ -144,7 +144,6 @@ export class ItemFormComponent implements OnInit {
   }
 
   private getSaveObservable(item: Item) {
-    console.log(this.isNew())
     if (this.isNew()) {
       return this.itemService.add(item);
     } else {

@@ -1,3 +1,5 @@
+<p-toast></p-toast>
+<p-button *ngIf="orderItemsOnCart.length" type="button" class="mr-2 shadow-6 toggle-button" (click)="sidebarVisible = true" icon="pi pi-arrow-left"></p-button>
 <div class="page">
   <div class="card">
     <p-tabMenu [model]="items" [activeItem]="activeItem" (activeItemChange)="onActiveItemChange($event)"></p-tabMenu>
@@ -5,20 +7,21 @@
   <div class="card">
     <div *ngIf="sidebarVisible">
       <app-order-item
-        (onVisibilityChange)="sidebarVisibilityChange($event)"
-        (onRemoveFromCart)="onRemoveFromCart($event)"
-        [itemsOnCart]="orderItemsOnCart">
-      </app-order-item>
-    </div>
-    <p-card>
-        <div class="card" *ngIf="activeItem.label === 'Itens'">
+      (onVisibilityChange)="sidebarVisibilityChange($event)"
+      (onRemoveFromCart)="onRemoveFromCart($event)"
+      (showToast)="showToast($event)"
+      [itemsOnCart]="orderItemsOnCart">
+    </app-order-item>
+  </div>
+  <p-card>
+    <div class="card" *ngIf="activeItem.label === 'Itens'">
           <app-item (itemAdded)="onItemAdded($event)"></app-item>
         </div>
         <div class="card" *ngIf="activeItem.label === 'Pedidos'">
           <app-order></app-order>
         </div>
-    </p-card>
-  </div>
+      </p-card>
+    </div>
 </div>
 
 

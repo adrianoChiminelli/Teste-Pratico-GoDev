@@ -30,6 +30,7 @@ import { SidebarModule } from 'primeng/sidebar';
 import { OrderItemComponent } from './feature/order-item/order-item.component';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { TooltipModule } from 'primeng/tooltip';
+import { TableModule } from 'primeng/table';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { TooltipModule } from 'primeng/tooltip';
     ConfirmPopupModule,
     SidebarModule,
     OverlayPanelModule,
-    TooltipModule
+    TooltipModule,
+    TableModule
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'pt' }],
   bootstrap: [AppComponent]

@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { MenuItem } from 'primeng/api';
-import { Item } from './core/item/item';
+import { MenuItem, Message, MessageService } from 'primeng/api';
 import { OrderItem } from './core/orderItem/orderItem';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  providers: [MessageService]
 })
 export class AppComponent {
   title = 'api-frontend';
@@ -18,6 +18,8 @@ export class AppComponent {
   orderItemsOnCart: OrderItem[] = [];
 
   sidebarVisible: boolean = false;
+
+  constructor(private messageService: MessageService) {}
 
   ngOnInit() {
       this.items = [
@@ -73,5 +75,9 @@ export class AppComponent {
     if (!this.orderItemsOnCart.length) {
       this.sidebarVisible = false;
     }
+  }
+
+  public showToast(event: Message) {
+    this.messageService.add(event);
   }
 }
